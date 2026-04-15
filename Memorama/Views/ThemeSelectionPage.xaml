@@ -14,9 +14,9 @@
                HorizontalTextAlignment="Center" 
                Margin="0,0,0,20"/>
 
-        <Button Text="🦁 Animales" 
+        <Button Text="TAKAX" 
                 Clicked="OnThemeSelected" 
-                CommandParameter="Animales" 
+                CommandParameter="TAKAX" 
                 HeightRequest="60" 
                 CornerRadius="10"/>
 
@@ -26,9 +26,9 @@
                 HeightRequest="60" 
                 CornerRadius="10"/>
 
-        <Button Text="🍎 Frutas" 
+        <Button Text="Los Planetas" 
                 Clicked="OnThemeSelected" 
-                CommandParameter="Frutas" 
+                CommandParameter="Planetas" 
                 HeightRequest="60" 
                 CornerRadius="10"/>
     </VerticalStackLayout>

@@ -21,23 +21,47 @@ namespace Memorama.Views
         private Grid cartaVolteada1;
         private Grid cartaVolteada2;
         private int puntos = 0;
+        private string _fondoTema;
+        public string FondoTema
+        {
+            get => _fondoTema;
+            set
+            {
+                _fondoTema = value;
+                OnPropertyChanged(); // Notifica al XAML que el valor cambió
+            }
+        }
 
         public GamePage()
         {
             InitializeComponent();
             // El juego NO se inicia aquí, se inicia en CargarCartasPorTema() una vez que recibe la propiedad
+            // Establecemos el BindingContext para que el XAML pueda leer las propiedades de esta clase
+            BindingContext = this;
         }
 
         private void CargarCartasPorTema()
         {
             // Asignar el paquete de imágenes según la elección del jugador
-            cartasIMG = _selectedTheme switch
+            switch (_selectedTheme)
             {
-                "Animales" => new[] { "img1_mem.jpeg", "img2_mem.jpeg", "img3_mem.jpeg", "img4_mem.jpeg", "img5_mem.jpeg", "img6_mem.jpeg" },
-                "Loteria" => new[] { "lot_1.png", "lot_2.png", "lot_3.png", "lot_4.png", "lot_5.png", "lot_6.png" },
-                "Frutas" => new[] { "frut1.jpeg", "frut2.jpeg", "frut3.jpeg", "frut4.jpeg", "frut5.jpeg", "frut6.jpeg" },
-                _ => new[] { "img1_mem.jpeg", "img2_mem.jpeg", "img3_mem.jpeg", "img4_mem.jpeg", "img5_mem.jpeg", "img6_mem.jpeg" } // Fallback seguro
-            };
+                case "TAKAX":
+                    FondoTema = "fondo_takax.jpeg";
+                    cartasIMG = new[] { "img1_mem.jpeg", "img2_mem.jpeg", "img3_mem.jpeg", "img4_mem.jpeg", "img5_mem.jpeg", "img6_mem.jpeg" };
+                    break;
+                case "Loteria":
+                    FondoTema = "lot_7_reverso.png";
+                    cartasIMG = new[] { "lot_1.png", "lot_2.png", "lot_3.png", "lot_4.png", "lot_5.png", "lot_6.png" };
+                    break;
+                case "Planetas":
+                    FondoTema = "bg_planetas.jpg";
+                    cartasIMG = new[] { "jupiter_carta.jpg", "marte_carta.jpg", "mercurio_carta.jpg", "saturno_carta.jpg", "tierra_carta.jpg", "venus_carta.jpg" };
+                    break;
+                default:
+                    FondoTema = "fondo_takax.jpeg"; // Fallback seguro
+                    cartasIMG = new[] { "img1_mem.jpeg", "img2_mem.jpeg", "img3_mem.jpeg", "img4_mem.jpeg", "img5_mem.jpeg", "img6_mem.jpeg" };
+                    break;
+            }
 
             maxPuntos = cartasIMG.Length * 100;
             IniciarMemorama();
@@ -67,19 +91,24 @@ namespace Memorama.Views
             var cartaClickeada = (Grid)sender;
             var caraFrontal = (Image)cartaClickeada.Children[1];
 
-            if (cartasDeshabilitadas || cartaClickeada == cartaVolteada1 || caraFrontal.IsVisible)
+            // 1. Validaciones: Agregamos cartaVolteada2 a la comprobación de seguridad
+            if (cartasDeshabilitadas || cartaClickeada == cartaVolteada1 || cartaClickeada == cartaVolteada2 || caraFrontal.IsVisible)
                 return;
 
-            await AnimarVolteo(cartaClickeada, mostrarFrente: true);
-
+            // 2. ASIGNACIÓN INMEDIATA ANTES DE LA ANIMACIÓN
             if (cartaVolteada1 == null)
             {
-                cartaVolteada1 = cartaClickeada;
+                cartaVolteada1 = cartaClickeada; // El juego ya sabe que esta carta está ocupada
+                await AnimarVolteo(cartaClickeada, mostrarFrente: true);
             }
-            else
+            else if (cartaVolteada2 == null)
             {
                 cartaVolteada2 = cartaClickeada;
-                cartasDeshabilitadas = true;
+                cartasDeshabilitadas = true; // BLOQUEO INMEDIATO del resto del tablero
+
+                await AnimarVolteo(cartaClickeada, mostrarFrente: true);
+
+                // Ahora sí, comprobamos si son iguales
                 await ComprobarCoincidencia();
             }
         }
@@ -103,16 +132,22 @@ namespace Memorama.Views
                     }
                     else
                     {
-                        // Navega hacia atrás en la pila del Shell (regresa a la pantalla de selección)
                         await Shell.Current.GoToAsync("..");
                     }
                 }
             }
             else
             {
+                // Se espera un poco para que el jugador vea las cartas incorrectas
                 await Task.Delay(800);
-                _ = AnimarVolteo(cartaVolteada1, mostrarFrente: false);
-                _ = AnimarVolteo(cartaVolteada2, mostrarFrente: false);
+
+                // CAMBIO AQUÍ: Esperamos a que AMBAS animaciones terminen por completo
+                await Task.WhenAll(
+                    AnimarVolteo(cartaVolteada1, mostrarFrente: false),
+                    AnimarVolteo(cartaVolteada2, mostrarFrente: false)
+                );
+
+                // El turno se resetea (y se desbloquea el tablero) HASTA que las cartas ya están boca abajo
                 ResetearTurno();
             }
         }
