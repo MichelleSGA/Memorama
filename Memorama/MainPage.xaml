@@ -25,7 +25,6 @@
                             </Grid.GestureRecognizers>
 
                             <Image Source="fondo_mem.jpeg" Aspect="AspectFill" IsVisible="True"/>
-
                             <Image Source="{Binding .}" Aspect="AspectFill" IsVisible="False"/>
 
                         </Grid>

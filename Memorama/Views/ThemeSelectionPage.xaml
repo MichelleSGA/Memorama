@@ -20,9 +20,9 @@
                 HeightRequest="60" 
                 CornerRadius="10"/>
 
-        <Button Text="🚗 Vehículos" 
+        <Button Text="Estilo Lotería" 
                 Clicked="OnThemeSelected" 
-                CommandParameter="Vehiculos" 
+                CommandParameter="Loteria"
                 HeightRequest="60" 
                 CornerRadius="10"/>
 

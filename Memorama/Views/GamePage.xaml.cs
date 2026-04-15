@@ -33,8 +33,8 @@ namespace Memorama.Views
             // Asignar el paquete de imágenes según la elección del jugador
             cartasIMG = _selectedTheme switch
             {
-                "Animales" => new[] { "anim1.jpeg", "anim2.jpeg", "anim3.jpeg", "anim4.jpeg", "anim5.jpeg", "anim6.jpeg" },
-                "Vehiculos" => new[] { "auto1.jpeg", "auto2.jpeg", "auto3.jpeg", "auto4.jpeg", "auto5.jpeg", "auto6.jpeg" },
+                "Animales" => new[] { "img1_mem.jpeg", "img2_mem.jpeg", "img3_mem.jpeg", "img4_mem.jpeg", "img5_mem.jpeg", "img6_mem.jpeg" },
+                "Loteria" => new[] { "lot_1.png", "lot_2.png", "lot_3.png", "lot_4.png", "lot_5.png", "lot_6.png" },
                 "Frutas" => new[] { "frut1.jpeg", "frut2.jpeg", "frut3.jpeg", "frut4.jpeg", "frut5.jpeg", "frut6.jpeg" },
                 _ => new[] { "img1_mem.jpeg", "img2_mem.jpeg", "img3_mem.jpeg", "img4_mem.jpeg", "img5_mem.jpeg", "img6_mem.jpeg" } // Fallback seguro
             };
