@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Memorama.Views.ThemeSelectionPage"
+             Title="Inicio - Selección de tema">
+    <VerticalStackLayout Spacing="20" Padding="30" VerticalOptions="Center" HorizontalOptions="Center">
+        <Label Text="¡Bienvenido al Memorama!" 
+               FontSize="28" 
+               FontAttributes="Bold" 
+               HorizontalTextAlignment="Center" />
+
+        <Label Text="Elige una temática para jugar:" 
+               FontSize="18" 
+               HorizontalTextAlignment="Center" 
+               Margin="0,0,0,20"/>
+
+        <Button Text="🦁 Animales" 
+                Clicked="OnThemeSelected" 
+                CommandParameter="Animales" 
+                HeightRequest="60" 
+                CornerRadius="10"/>
+
+        <Button Text="🚗 Vehículos" 
+                Clicked="OnThemeSelected" 
+                CommandParameter="Vehiculos" 
+                HeightRequest="60" 
+                CornerRadius="10"/>
+
+        <Button Text="🍎 Frutas" 
+                Clicked="OnThemeSelected" 
+                CommandParameter="Frutas" 
+                HeightRequest="60" 
+                CornerRadius="10"/>
+    </VerticalStackLayout>
+</ContentPage>

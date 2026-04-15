@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Memorama.Views.GamePage"
+             Title="Jugando">
+    <Grid RowDefinitions="Auto, *" Padding="20">
+
+        <Label x:Name="PuntosLabel" 
+               Text="Puntos: 0" 
+               FontSize="24" 
+               FontAttributes="Bold"
+               HorizontalOptions="Center" 
+               Margin="0,0,0,20" />
+
+        <ScrollView Grid.Row="1">
+            <FlexLayout x:Name="Tablero" Wrap="Wrap" JustifyContent="Center" AlignItems="Center" MaximumWidthRequest="525">
+
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid WidthRequest="100" HeightRequest="140" Margin="5" ClassId="{Binding .}">
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ManejarClicCarta" />
+                            </Grid.GestureRecognizers>
+
+                            <Image Source="fondo_mem.jpeg" Aspect="AspectFill" IsVisible="True"/>
+
+                            <Image Source="{Binding .}" Aspect="AspectFill" IsVisible="False"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+
+            </FlexLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
