@@ -43,10 +43,9 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\memorama_icono.png" Color="#512BD4"/>
-
+		<MauiIcon Include="Resources\AppIcon\memorama_icono.jpg" ForegroundScale="0.65" />		
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\memorama_splash.png" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
